@@ -1,3 +1,4 @@
+import tkinter as tk
 import os
 import customtkinter as ctk
 from tkinter import *
@@ -60,7 +61,7 @@ class PDF_Editor:
 
     # Miscellaneous Functions
     def AboutWindow(self):
-        messagebox.showinfo("Editor de PDF", "PDF Editor 13.05.24\nDeveloped by Tecla Fernandes")
+        messagebox.showinfo("Editor de PDF", "Junta, separa e gira PDFs\nDeveloped by Tecla Fernandes")
 
     def ClearScreen(self):
         for widget in self.frame_1.winfo_children():
@@ -79,6 +80,15 @@ class PDF_Editor:
 
     def Home_Page(self):
         self.ClearScreen()
+
+        image_path = "images/welcome.png" 
+        img = Image.open(image_path)
+        img = img.resize((740, 480))
+        img_tk = ImageTk.PhotoImage(img)
+
+        img_label = tk.Label(self.frame_1, image=img_tk, bg=self.color_2)
+        img_label.image = img_tk
+        img_label.pack(pady=1)
 
     def SelectPDF(self, to_call):
         self.PDF_path = filedialog.askopenfilename(initialdir="/",

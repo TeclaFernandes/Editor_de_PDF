@@ -32,17 +32,15 @@ class PDF_Editor:
         edit = Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Menu', menu=edit)
         edit.add_command(label='Dividir PDF', command=partial(self.SelectPDF, 1))
+        edit.add_separator()
         edit.add_command(label='Mesclar PDF', command=self.Merge_PDFs_Data)
         edit.add_separator()
         edit.add_command(label='Girar PDF', command=partial(self.SelectPDF, 2))
-
-        about = Menu(self.menubar, tearoff=0)
-        self.menubar.add_cascade(label='Sobre', menu=about)
-        about.add_command(label='Sobre', command=self.AboutWindow)
-
-        exit = Menu(self.menubar, tearoff=0)
-        self.menubar.add_cascade(label='Sair', menu=exit)
-        exit.add_command(label='Sair', command=self.Exit)
+        edit.add_separator()
+        edit.add_command(label='Sobre', command=self.AboutWindow)
+        
+        self.menubar.add_command(label='Sair', command=self.Exit)
+        self.window.config(menu=self.menubar)
 
         self.window.config(menu=self.menubar)
 
@@ -66,7 +64,8 @@ class PDF_Editor:
         self.Home_Page()
 
     def Exit(self):
-        self.window.destroy()
+        if messagebox.askyesno("Confirmação", "Tem certeza que deseja sair?"):
+            self.window.destroy()
 
     def Home_Page(self):
         self.ClearScreen()       

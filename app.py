@@ -14,14 +14,11 @@ class PDF_Editor:
         self.window.geometry("740x480")
         self.window.title('PDF Editor')
 
-        # Color Options
         self.color_1 = "white"
         self.color_2 = "#C9B977"
         self.color_3 = "black"
         self.color_4 = '#960018'
-        # self.color_4 = 'orange red'
 
-        # Font Options
         self.font_1 = "Helvetica"
         self.font_2 = "Times New Roman"
         self.font_3 = "trebuchet ms"
@@ -30,10 +27,8 @@ class PDF_Editor:
         self.PDF_path = []
         self.PDF_List = None
 
-        # Menubar
         self.menubar = Menu(self.window)
 
-        # Adding Edit Menu and its sub menus
         edit = Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Menu', menu=edit)
         edit.add_command(label='Dividir PDF', command=partial(self.SelectPDF, 1))
@@ -41,27 +36,22 @@ class PDF_Editor:
         edit.add_separator()
         edit.add_command(label='Girar PDF', command=partial(self.SelectPDF, 2))
 
-        # Adding About Menu
         about = Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Sobre', menu=about)
         about.add_command(label='Sobre', command=self.AboutWindow)
 
-        # Exit the Application
         exit = Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label='Sair', menu=exit)
         exit.add_command(label='Sair', command=self.Exit)
 
-        # Configuring the menubar
         self.window.config(menu=self.menubar)
 
-        # Creating a Frame
         self.frame_1 = Frame(self.window, bg=self.color_2, width=740, height=480)
         self.frame_1.place(x=0, y=0)
         self.Home_Page()
 
-    # Miscellaneous Functions
     def AboutWindow(self):
-        messagebox.showinfo("Editor de PDF", "Junta, separa e gira PDFs\nDeveloped by Tecla Fernandes")
+        messagebox.showinfo("Editor de PDF", "PDF Editor 13.05.24\nDeveloped by Tecla Fernandes")
 
     def ClearScreen(self):
         for widget in self.frame_1.winfo_children():
@@ -79,7 +69,7 @@ class PDF_Editor:
         self.window.destroy()
 
     def Home_Page(self):
-        self.ClearScreen()
+        self.ClearScreen()       
 
         image_path = "images/welcome.png" 
         img = Image.open(image_path)
@@ -253,8 +243,6 @@ class PDF_Editor:
         for index in selected_items[::-1]:
             self.PDF_List.delete(index)
 
-    # Operation Functions
-    # Salavando os arquivos: Dividido
     def Split_PDF(self):
         try:
             start = int(self.From_Entry.get())
@@ -282,7 +270,6 @@ class PDF_Editor:
 
         messagebox.showinfo("Atenção", "PDF Dividido com sucesso!")
 
-    # Salavando os arquivos: Mesclados
     def Merge_PDF(self):
         try:
             if not self.saving_location:
@@ -305,7 +292,6 @@ class PDF_Editor:
             messagebox.showerror("Error", f"An error occurred while merging PDFs: {e}")
             print(f"Error in Merge_PDF: {e}")
 
-    # Salavando os arquivos: Girados
     def Rotate_PDF(self):
         try:
             degree = int(self.degree_combo.get())
@@ -325,7 +311,7 @@ class PDF_Editor:
 
             for page_num in range(len(pdf_reader.pages)):
                 page = pdf_reader.pages[page_num]
-                page.rotate(degree)  # Substitua rotate_clockwise por rotate
+                page.rotate(degree)  
                 pdf_writer.add_page(page)
 
             output_file_path = os.path.join(self.saving_location, "rotated_document.pdf")
